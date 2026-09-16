@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mathematics in the Modern World | Midterm Lessons</title>
+  <style>
+    :root {
+      --primary: #1a365d;
+      --primary-light: #2b6cb0;
+      --accent: #ed8936;
+      --bg: #f7fafc;
+      --card: #ffffff;
+      --text: #2d3748;
+      --muted: #718096;
+      --success: #38a169;
+      --border: #e2e8f0;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+      padding: 2rem 1.25rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      position: relative;
+    }
+
+    header .subtitle {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+
+    .developer {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      position: relative;
+    }
+
+    /* Navigation / Topic list */
+    .nav-container {
+      max-width: 800px;
+      margin: -1.5rem auto 0;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .topic-list {
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .topic-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topic-item:last-child {
+      border-bottom: none;
+    }
+
+    .topic-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 1.25rem;
+      cursor: pointer;
+      background: var(--card);
+      transition: background 0.2s;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .topic-header:hover,
+    .topic-header:active {
+      background: #edf2f7;
+    }
+
+    .topic-header h2 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .topic-number {
+      background: var(--primary);
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .chevron {
+      width: 22px;
+      height: 22px;
+      transition: transform 0.3s ease;
+      color: var(--muted);
+    }
+
+    .topic-item.active .chevron {
+      transform: rotate(180deg);
+      color: var(--primary-light);
+    }
+
+    .topic-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      background: #f8fafc;
+    }
+
+    .topic-item.active .topic-content {
+      max-height: 5000px; /* large enough for content */
+    }
+
+    .content-inner {
+      padding: 1.25rem 1.25rem 1.75rem;
+    }
+
+    /* Typography inside content */
+    h3 {
+      font-size: 1.15rem;
+      color: var(--primary);
+      margin: 1.4rem 0 0.6rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid #bee3f8;
+    }
+
+    h3:first-child {
+      margin-top: 0;
+    }
+
+    h4 {
+      font-size: 1.05rem;
+      color: var(--primary-light);
+      margin: 1.1rem 0 0.45rem;
+    }
+
+    p {
+      margin-bottom: 0.85rem;
+    }
+
+    ul, ol {
+      margin: 0.6rem 0 1rem 1.4rem;
+    }
+
+    li {
+      margin-bottom: 0.4rem;
+    }
+
+    .example-box {
+      background: #ebf8ff;
+      border-left: 4px solid var(--primary-light);
+      padding: 0.9rem 1rem;
+      margin: 0.9rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .example-box strong {
+      color: var(--primary);
+    }
+
+    .note-box {
+      background: #fefcbf;
+      border-left: 4px solid var(--accent);
+      padding: 0.9rem 1rem;
+      margin: 0.9rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .symbol-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+
+    .symbol-table th,
+    .symbol-table td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.75rem;
+      text-align: left;
+    }
+
+    .symbol-table th {
+      background: var(--primary);
+      color: white;
+    }
+
+    .symbol-table tr:nth-child(even) {
+      background: #f7fafc;
+    }
+
+    .math {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1.1em;
+    }
+
+    .highlight {
+      background: #c6f6d5;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* Venn diagram simple CSS */
+    .venn-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      margin: 1.2rem 0;
+    }
+
+    .venn-box {
+      text-align: center;
+    }
+
+    .venn {
+      position: relative;
+      width: 220px;
+      height: 160px;
+      margin: 0 auto 0.5rem;
+    }
+
+    .circle {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid;
+      opacity: 0.75;
+    }
+
+    .circle.a {
+      left: 10px;
+      top: 20px;
+      border-color: #3182ce;
+      background: rgba(49, 130, 206, 0.15);
+    }
+
+    .circle.b {
+      right: 10px;
+      top: 20px;
+      border-color: #dd6b20;
+      background: rgba(221, 107, 32, 0.15);
+    }
+
+    .circle.c {
+      left: 50px;
+      top: 0;
+      border-color: #38a169;
+      background: rgba(56, 161, 105, 0.15);
+    }
+
+    .venn-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    footer .dev {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* Scroll to top button */
+    #scrollTop {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 100;
+    }
+
+    #scrollTop.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Responsive */
+    @media (min-width: 640px) {
+      header h1 {
+        font-size: 2.1rem;
+      }
+      .content-inner {
+        padding: 1.5rem 1.75rem 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mathematics in the Modern World</h1>
+    <p class="subtitle">Midterm Lessons</p>
+    <div class="developer">Developed by Juanito Rallos</div>
+  </header>
+
+  <div class="nav-container">
+    <div class="topic-list" id="topics">
+
+      <!-- 1. Mathematical Language and Symbols -->
+      <div class="topic-item">
+        <div class="topic-header" onclick="toggleTopic(this)">
+          <h2><span class="topic-number">1</span> Mathematical Language and Symbols</h2>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+        <div class="topic-content">
+          <div class="content-inner">
+            <h3>What is Mathematical Language?</h3>
+            <p>Mathematical language is a precise system of communication that uses symbols, numbers, letters, and special notations to express ideas clearly and without ambiguity. Unlike ordinary language, every symbol has an exact meaning.</p>
+
+            <h3>Common Mathematical Symbols</h3>
+            <table class="symbol-table">
+              <thead>
+                <tr>
+                  <th>Symbol</th>
+                  <th>Name / Meaning</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="math">∈</td>
+                  <td>Element of / belongs to</td>
+                  <td>3 ∈ {1, 2, 3}</td>
+                </tr>
+                <tr>
+                  <td class="math">∉</td>
+                  <td>Not an element of</td>
+                  <td>5 ∉ {1, 2, 3}</td>
+                </tr>
+                <tr>
+                  <td class="math">⊆</td>
+                  <td>Subset of</td>
+                  <td>{1, 2} ⊆ {1, 2, 3}</td>
+                </tr>
+                <tr>
+                  <td class="math">⊂</td>
+                  <td>Proper subset of</td>
+                  <td>{1, 2} ⊂ {1, 2, 3}</td>
+                </tr>
+                <tr>
+                  <td class="math">∪</td>
+                  <td>Union</td>
+                  <td>A ∪ B</td>
+                </tr>
+                <tr>
+                  <td class="math">∩</td>
+                  <td>Intersection</td>
+                  <td>A ∩ B</td>
+                </tr>
+                <tr>
+                  <td class="math">∅ or { }</td>
+                  <td>Empty set</td>
+                  <td>∅</td>
+                </tr>
+                <tr>
+                  <td class="math">U</td>
+                  <td>Universal set</td>
+                  <td>U = {1,2,3,…}</td>
+                </tr>
+                <tr>
+                  <td class="math">′ or <sup>c</sup></td>
+                  <td>Complement</td>
+                  <td>A′ or A<sup>c</sup></td>
+                </tr>
+                <tr>
+                  <td class="math">| | or n( )</td>
+                  <td>Cardinality (number of elements)</td>
+                  <td>|A| = 4</td>
+                </tr>
+                <tr>
+                  <td class="math">∀</td>
+                  <td>For all / for every</td>
+                  <td>∀x ∈ ℝ</td>
+                </tr>
+                <tr>
+                  <td class="math">∃</td>
+                  <td>There exists</td>
+                  <td>∃x such that…</td>
+                </tr>
+                <tr>
+                  <td class="math">⇒</td>
+                  <td>Implies</td>
+                  <td>p ⇒ q</td>
+                </tr>
+                <tr>
+                  <td class="math">⇔</td>
+                  <td>If and only if</td>
+                  <td>p ⇔ q</td>
+                </tr>
+                <tr>
+                  <td class="math">∴</td>
+                  <td>Therefore</td>
+                  <td>∴ the answer is…</td>
+                </tr>
+                <tr>
+                  <td class="math">∵</td>
+                  <td>Because</td>
+                  <td>∵ x = 2</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="example-box">
+              <strong>Example 1:</strong> “3 is an element of the set of odd numbers” is written as:<br>
+              <span class="math">3 ∈ {1, 3, 5, 7, …}</span>
+            </div>
+
+            <div class="example-box">
+              <strong>Example 2:</strong> “All even numbers are divisible by 2” can be expressed as:<br>
+              <span class="math">∀x (x is even ⇒ x is divisible by 2)</span>
+            </div>
+
+            <div class="note-box">
+              <strong>Tip:</strong> Always read mathematical symbols carefully. One wrong symbol can completely change the meaning of a statement.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Mathematical Expression -->
+      <div class="topic-item">
+        <div class="topic-header" onclick="toggleTopic(this)">
+          <h2><span class="topic-number">2</span> Mathematical Expression</h2>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+        <div class="topic-content">
+          <div class="content-inner">
+            <h3>What is a Mathematical Expression?</h3>
+            <p>A mathematical expression is a combination of numbers, variables, operators, and grouping symbols that represents a value. It does <strong>not</strong> contain an equality or inequality sign.</p>
+
+            <h4>Examples of Expressions</h4>
+            <ul>
+              <li><span class="math">3x + 5</span></li>
+              <li><span class="math">2a² − 7b + 4</span></li>
+              <li><span class="math">(x + 1)/(x − 2)</span></li>
+              <li><span class="math">√(9 + y)</span></li>
+              <li><span class="math">5!</span> (factorial)</li>
+            </ul>
+
+            <h3>Expression vs Equation vs Inequality</h3>
+            <table class="symbol-table">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Definition</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Expression</strong></td>
+                  <td>Represents a value (no = or &lt;)</td>
+                  <td>2x + 7</td>
+                </tr>
+                <tr>
+                  <td><strong>Equation</strong></td>
+                  <td>States that two expressions are equal</td>
+                  <td>2x + 7 = 15</td>
+                </tr>
+                <tr>
+                  <td><strong>Inequality</strong></td>
+                  <td>Compares two expressions</td>
+                  <td>2x + 7 &gt; 15</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="example-box">
+              <strong>Example 1:</strong> Evaluate the expression <span class="math">3x² − 2x + 5</span> when x = 2.<br>
+              Solution: 3(2)² − 2(2) + 5 = 3(4) − 4 + 5 = 12 − 4 + 5 = <span class="highlight">13</span>
+            </div>
+
+            <div class="example-box">
+              <strong>Example 2:</strong> Simplify <span class="math">4(a + 3) − 2(a − 5)</span><br>
+              = 4a + 12 − 2a + 10 = <span class="highlight">2a + 22</span>
+            </div>
+
+            <div class="example-box">
+              <strong>Example 3:</strong> Translate into a mathematical expression:<br>
+              “Five more than twice a number” → <span class="math">2x + 5</span><br>
+              “The product of a number and 7 decreased by 3” → <span class="math">7x − 3</span>
+            </div>
+
+            <div class="note-box">
+              <strong>Remember:</strong> An expression can be simplified or evaluated, but it cannot be “solved.” Only equations and inequalities can be solved.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Sets -->
+      <div class="topic-item">
+        <div class="topic-header" onclick="toggleTopic(this)">
+          <h2><span class="topic-number">3</span> Sets</h2>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+        <div class="topic-content">
+          <div class="content-inner">
+            <h3>Definition of a Set</h3>
+            <p>A <strong>set</strong> is a well-defined collection of distinct objects. The objects in a set are called <strong>elements</strong> or <strong>members</strong>.</p>
+
+            <div class="example-box">
+              <strong>Example:</strong><br>
+              A = {apple, banana, orange} → A is a set of fruits<br>
+              B = {2, 4, 6, 8, 10} → B is the set of the first five even numbers
+            </div>
+
+            <h3>Ways to Represent a Set</h3>
+            <h4>1. Roster / Tabular Method</h4>
+            <p>Elements are listed inside curly braces and separated by commas.</p>
+            <div class="example-box">
+              C = {a, e, i, o, u}<br>
+              D = {1, 3, 5, 7, 9}
+            </div>
+
+            <h4>2. Descriptive Method</h4>
+            <p>The set is described in words.</p>
+            <div class="example-box">
+              E = the set of all even whole numbers less than 10<br>
+              F = the set of days in a week
+            </div>
+
+            <h4>3. Set-Builder Notation</h4>
+            <p>(Covered in detail in the next section)</p>
+
+            <h3>Important Symbols Related to Sets</h3>
+            <ul>
+              <li><span class="math">x ∈ A</span> → x is an element of A</li>
+              <li><span class="math">x ∉ A</span> → x is not an element of A</li>
+              <li><span class="math">|A|</span> or <span class="math">n(A)</span> → number of elements in A (cardinality)</li>
+            </ul>
+
+            <div class="example-box">
+              <strong>Example:</strong> Let G = {red, blue, green}<br>
+              • red ∈ G<br>
+              • yellow ∉ G<br>
+              • |G| = 3
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Set Builder Notation -->
+      <div class="topic-item">
+        <div class="topic-header" onclick="toggleTopic(this)">
+          <h2><span class="topic-number">4</span> Set-Builder Notation</h2>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+        <div class="topic-content">
+          <div class="content-inner">
+            <h3>What is Set-Builder Notation?</h3>
+            <p>Set-builder notation describes a set by stating the property that its elements must satisfy. The general form is:</p>
+            <p style="text-align:center; font-size:1.2rem; margin:1rem 0;">
+              <span class="math">{ x | P(x) }</span> &nbsp; or &nbsp; <span class="math">{ x : P(x) }</span>
+            </p>
+            <p>This is read as: “the set of all x such that P(x) is true.”</p>
+
+            <h3>Many Examples</h3>
+
+            <div class="example-box">
+              <strong>Example 1:</strong> Set of all even natural numbers<br>
+              <span class="math">{ x ∈ ℕ | x is even }</span> &nbsp; or &nbsp; <span class="math">{ x | x = 2k, k ∈ ℕ }</span>
+            </div>
+
+            <div class="example-box">
+              <strong>Example 2:</strong> Set of integers greater than 5<br>
+              <span class="math">{ x ∈ ℤ | x &gt; 5 }</span>
+            </div>
+
+            <div class="example-box">
+              <strong>Example 3:</strong> Set of all real numbers between 0 and 1 (not including endpoints)<br>
+              <span class="math">{ x ∈ ℝ | 0 &lt; x &lt; 1 }</span>
+            </div>
+
+            <div class="example-box">
+              <strong>Example 4:</strong> Set of vowels in the English alphabet<br>
+              <span class="math">{ x | x is a vowel in English }</span> = {a, e, i, o, u}
+            </div>
+
+            <div class="example-box">
+              <strong>Example 5:</strong> Set of perfect squares less than 50<br>
+              <span class="math">{ x ∈ ℕ | x = n², n ∈ ℕ, x &lt; 50 }</span> = {1, 4, 9, 16, 25, 36, 49}
+            </div>
+
+            <div class="example-box">
+              <strong>Example 6:</strong> Set of all positive multiples of 3<br>
+              <span class="math">{ x | x = 3k, k ∈ ℕ }</span>
+            </div>
+
+            <div class="note-box">
+              <strong>Advantage:</strong> Set-builder notation is very useful when the set has infinitely many elements or when listing all elements is impractical.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Different Types of Sets -->
+      <div class="topic-item">
+        <div class="topic-header" onclick="toggleTopic(this)">
+          <h2><span class="topic-number">5</span> Different Types of Sets</h2>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+        <div class="topic-content">
+          <div class="content-inner">
+            <h3>1. Empty Set (Null Set)</h3>
+            <p>A set that contains no elements. Denoted by <span class="math">∅</span> or <span class="math">{ }</span>.</p>
+            <div class="example-box">
+              • The set of odd numbers divisible by 2 → ∅<br>
+              • The set of human beings with 5 legs → ∅
+            </div>
+
+            <h3>2. Finite Set</h3>
+            <p>A set with a countable (limited) number of elements.</p>
+            <div class="example-box">
+              A = {1, 2, 3, 4, 5} → |A| = 5 (finite)<br>
+              B = {days of the week} → |B| = 7 (finite)
+            </div>
+
+            <h3>3. Infinite Set</h3>
+            <p>A set with unlimited number of elements.</p>
+            <div class="example-box">
+              ℕ = {1, 2, 3, 4, …} (natural numbers)<br>
+              ℤ = {…, −2, −1, 0, 1, 2, …} (integers)<br>
+              ℝ = set of all real numbers
+            </div>
+
+            <h3>4. Equal Sets</h3>
+            <p>Two sets are equal if they contain exactly the same elements (order does not matter).</p>
+            <div class="example-box">
+              A = {1, 2, 3} and B = {3, 1, 2} → A = B
+            </div>
+
+            <h3>5. Equivalent Sets</h3>
+            <p>Two sets are equivalent if they have the same number of elements (same cardinality).</p>
+            <div class="example-box">
+              A = {a, b, c} and B = {1, 2, 3} → A ∼ B (both have 3 elements)
+            </div>
+
+            <h3>6. Subset</h3>
+            <p>A is a subset of B (A ⊆ B) if every element of A is also an element of B.</p>
+            <div class="example-box">
+              A = {1, 2}, B = {1, 2, 3, 4} → A ⊆ B
+            </div>
+
+            <h3>7. Proper Subset</h3>
+            <p>A is a proper subset of B (A ⊂ B) if A ⊆ B and A ≠ B (B has at least one extra element).</p>
+            <div class="example-box">
+              A = {1, 2}, B = {1, 2, 3} → A ⊂ B
+            </div>
+
+            <h3>8. Universal Set</h3>
+            <p>The set that contains all elements under consideration for a particular discussion. Denoted by U or ξ.</p>
+            <div class="example-box">
+              If we are talking about students in a school, U = set of all students in that school.
+            </div>
+
+            <h3>9. Power Set</h3>
+            <p>The set of all possible subsets of a given set A. Denoted by P(A) or 2<sup>A</sup>.</p>
+            <div class="example-box">
+              Let A = {1, 2}<br>
+              P(A) = { ∅, {1}, {2}, {1, 2} }<br>
+              |P(A)| = 2<sup>n</sup> where n = |A|
+            </div>
+
+            <h3>10. Disjoint Sets</h3>
+            <p>Two sets that have no elements in common (their intersection is empty).</p>
+            <div class="example-box">
+              A = {1, 2, 3}, B = {4, 5, 6} → A ∩ B = ∅ (disjoint)
+            </div>
+
+            <h3>11. Singleton Set</h3>
+            <p>A set with exactly one element.</p>
+            <div class="example-box">
+              {5}, {“apple”}, {∅} (the set containing the empty set)
+            </div>
+
+            <h3>12. Complementary Set</h3>
+            <p>The complement of A (relative to U) is the set of all elements in U that are not in A. Written as A′ or A<sup>c</sup>.</p>
+            <div class="example-box">
+              U = {1, 2, 3, 4, 5, 6}, A = {1, 2, 3}<br>
+              A′ = {4, 5, 6}
+            </div>
+
+            <div class="note-box">
+              <strong>Quick Summary of All Important Sets:</strong><br>
+              Empty • Finite • Infinite • Equal • Equivalent • Subset • Proper Subset • Universal • Power Set • Disjoint • Singleton • Complement
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Venn Diagram -->
+      <div class="topic-item">
+        <div class="topic-header" onclick="toggleTopic(this)">
+          <h2><span class="topic-number">6</span> Venn Diagram</h2>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+        <div class="topic-content">
+          <div class="content-inner">
+            <h3>What is a Venn Diagram?</h3>
+            <p>A Venn diagram is a visual representation of sets using overlapping circles (or other shapes) drawn inside a rectangle that represents the universal set.</p>
+
+            <h3>Basic Operations Illustrated</h3>
+
+            <h4>Union (A ∪ B)</h4>
+            <p>All elements that are in A or B or both.</p>
+            <div class="example-box">
+              A = {1, 2, 3}, B = {3, 4, 5}<br>
+              A ∪ B = {1, 2, 3, 4, 5}
+            </div>
+
+            <h4>Intersection (A ∩ B)</h4>
+            <p>Elements that are common to both A and B.</p>
+            <div class="example-box">
+              A ∩ B = {3}
+            </div>
+
+            <h4>Difference (A − B or A \ B)</h4>
+            <p>Elements in A but not in B.</p>
+            <div class="example-box">
+              A − B = {1, 2}<br>
+              B − A = {4, 5}
+            </div>
+
+            <h4>Complement (A′)</h4>
+            <p>Elements in the universal set that are not in A.</p>
+
+            <h3>Visual Examples</h3>
+            <div class="venn-container">
+              <div class="venn-box">
+                <div class="venn">
+                  <div class="circle a"></div>
+                  <div class="circle b"></div>
+                </div>
+                <div class="venn-label">Two overlapping sets<br>A and B</div>
+              </div>
+            </div>
+
+            <div class="example-box">
+              <strong>Example Problem:</strong><br>
+              U = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}<br>
+              A = {1, 2, 3, 4, 5}<br>
+              B = {3, 4, 5, 6, 7}<br><br>
+              Find:<br>
+              • A ∪ B = {1, 2, 3, 4, 5, 6, 7}<br>
+              • A ∩ B = {3, 4, 5}<br>
+              • A − B = {1, 2}<br>
+              • B − A = {6, 7}<br>
+              • A′ = {6, 7, 8, 9, 10}
+            </div>
+
+            <div class="example-box">
+              <strong>Another Example (Three Sets):</strong><br>
+              Let U = {a, b, c, d, e, f, g}<br>
+              A = {a, b, c, d}<br>
+              B = {c, d, e}<br>
+              C = {d, e, f}<br><br>
+              A ∩ B ∩ C = {d}<br>
+              A ∪ B ∪ C = {a, b, c, d, e, f}
+            </div>
+
+            <div class="note-box">
+              <strong>Tip for drawing:</strong> Always draw the universal set as a rectangle first, then draw the circles inside it. Shade the required region carefully.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Reasoning -->
+      <div class="topic-item">
+        <div class="topic-header" onclick="toggleTopic(this)">
+          <h2><span class="topic-number">7</span> Reasoning (Deductive & Inductive)</h2>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+        <div class="topic-content">
+          <div class="content-inner">
+            <h3>What is Reasoning in Mathematics?</h3>
+            <p>Reasoning is the process of drawing conclusions based on evidence, facts, or logical principles. In mathematics we mainly use two types:</p>
+
+            <h3>1. Deductive Reasoning</h3>
+            <p>Starts from general statements (rules, theorems, definitions) and reaches a specific conclusion. If the premises are true, the conclusion <strong>must</strong> be true.</p>
+
+            <div class="example-box">
+              <strong>Example 1 (Classic Syllogism):</strong><br>
+              Premise 1: All even numbers are divisible by 2.<br>
+              Premise 2: 14 is an even number.<br>
+              Conclusion: Therefore, 14 is divisible by 2.
+            </div>
+
+            <div class="example-box">
+              <strong>Example 2:</strong><br>
+              Premise: The sum of angles in any triangle is 180°.<br>
+              Given: In triangle ABC, ∠A = 50°, ∠B = 60°.<br>
+              Conclusion: ∠C = 180° − 50° − 60° = 70°.
+            </div>
+
+            <div class="example-box">
+              <strong>Example 3:</strong><br>
+              If x is a multiple of 6, then x is a multiple of both 2 and 3.<br>
+              18 is a multiple of 6.<br>
+              ∴ 18 is a multiple of 2 and of 3.
+            </div>
+
+            <h3>2. Inductive Reasoning</h3>
+            <p>Starts from specific observations or examples and moves toward a general conclusion. The conclusion is <strong>probable</strong> but not guaranteed.</p>
+
+            <div class="example-box">
+              <strong>Example 1:</strong><br>
+              Observation: 2 + 1 = 3 (odd)<br>
+              4 + 1 = 5 (odd)<br>
+              6 + 1 = 7 (odd)<br>
+              Conclusion: The sum of an even number and 1 is always odd.
+            </div>
+
+            <div class="example-box">
+              <strong>Example 2:</strong><br>
+              3² = 9<br>
+              5² = 25<br>
+              7² = 49<br>
+              9² = 81<br>
+              Pattern: The square of an odd number is odd.<br>
+              General conclusion: For any odd integer n, n² is odd.
+            </div>
+
+            <div class="example-box">
+              <strong>Example 3 (Number Pattern):</strong><br>
+              1 = 1²<br>
+              1 + 3 = 4 = 2²<br>
+              1 + 3 + 5 = 9 = 3²<br>
+              1 + 3 + 5 + 7 = 16 = 4²<br>
+              Conclusion: The sum of the first n odd numbers is n².
+            </div>
+
+            <h3>Comparison Table</h3>
+            <table class="symbol-table">
+              <thead>
+                <tr>
+                  <th>Aspect</th>
+                  <th>Deductive</th>
+                  <th>Inductive</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Direction</td>
+                  <td>General → Specific</td>
+                  <td>Specific → General</td>
+                </tr>
+                <tr>
+                  <td>Certainty</td>
+                  <td>Conclusion is certain (if premises true)</td>
+                  <td>Conclusion is probable</td>
+                </tr>
+                <tr>
+                  <td>Used for</td>
+                  <td>Proofs, theorems, solving problems</td>
+                  <td>Discovering patterns, forming conjectures</td>
+                </tr>
+                <tr>
+                  <td>Risk</td>
+                  <td>Low (if logic is correct)</td>
+                  <td>Higher (counter-example can disprove)</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="note-box">
+              <strong>Important:</strong> Both types of reasoning are valuable. Inductive reasoning helps us discover patterns and form conjectures. Deductive reasoning is used to prove those conjectures rigorously.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>Mathematics in the Modern World • Midterm Lessons</p>
+    <p class="dev">Developed by Juanito Rallos</p>
+    <p style="margin-top:0.5rem; font-size:0.85rem;">Tap any topic above to expand or collapse</p>
+  </footer>
+
+  <button id="scrollTop" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Back to top">↑</button>
+
+  <script>
+    function toggleTopic(header) {
+      const item = header.parentElement;
+      const wasActive = item.classList.contains('active');
+
+      // Optional: close others (accordion behavior)
+      document.querySelectorAll('.topic-item').forEach(el => {
+        el.classList.remove('active');
+      });
+
+      if (!wasActive) {
+        item.classList.add('active');
+      }
+    }
+
+    // Show scroll-to-top button
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('scrollTop');
+      if (window.scrollY > 300) {
+        btn.classList.add('show');
+      } else {
+        btn.classList.remove('show');
+      }
+    });
+  </script>
+</body>
+</html>
